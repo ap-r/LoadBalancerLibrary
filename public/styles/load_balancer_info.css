@@ -1,0 +1,92 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    padding: 40px 20px; /* Increased padding for a more spacious look */
+    text-align: center;
+    margin-bottom: 40px; /* Larger space below the header */
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.5em; /* Larger font size for the heading */
+    font-weight: bold; /* Bold font weight for emphasis */
+}
+
+/* Main content */
+.main-content {
+    text-align: center;
+}
+
+/* Sections */
+.algorithm-info, .states-info {
+    margin-bottom: 30px;
+}
+
+.algorithm-info h2, .states-info h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #007bff; /* Consistent color for section headings */
+}
+
+.algorithm-info p {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.states-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    display: inline-block;
+    width: 80%;
+}
+
+.states-info li {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+}
+
+.states-info ul ul {
+    padding-left: 5%; /* Indent nested lists */
+    margin: 0; /* Remove default margin */
+}
+
+.states-info ul ul li {
+    margin: 5px 0; /* Margin for nested list items */
+}
+
+.states-info ul li ul {
+    width: 90%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .states-info {
+        width: 100%; /* Full width on small screens */
+    }
+}
