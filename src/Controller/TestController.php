@@ -113,9 +113,9 @@ class TestController extends AbstractController
      *
      * @param LoadBalancer                          $loadBalancer the LoadBalancer instance
      * @param Request                               $request      the request to process
-     * @param array<array<array{load: BigDecimal}>> $states       an array of states, where each state is an array of associative arrays with 'load' information
+     * @param array<array<array{load: BigDecimal}>> $states       an array of states of hosts info
      *
-     * @return array<array<array{load: BigDecimal}>> the updated array of states, including the new state after handling the request
+     * @return array<array<array{load: BigDecimal}>> the updated array of states of hosts info
      */
     public function sendOneRequestAndCaptureState(LoadBalancer $loadBalancer, Request $request, array $states): array
     {
