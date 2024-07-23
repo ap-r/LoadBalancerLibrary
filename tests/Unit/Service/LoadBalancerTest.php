@@ -38,7 +38,7 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(0.2, $hosts[2]->getLoad());
     }
 
-    public function testItPassesRequestAtFirstToTheFirstHostAndThenToTheHostWithTheLowestLoad(): void
+    public function testItPassesRequestToTheFirstHostAndThenToTheHostWithTheLowestLoad(): void
     {
         $hosts = [
             new Host(0.5),
@@ -113,5 +113,53 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(0.9, $hosts[0]->getLoad());
         $this->assertEquals(0.95, $hosts[1]->getLoad());
         $this->assertEquals(0.91, $hosts[2]->getLoad());
+    }
+
+    public function testItHandlesRequestRoundRobin(): void
+    {
+        $hosts = [
+            new Host(0.2),
+            new Host(0.6),
+            new Host(0.1),
+        ];
+        $request = new Request(0.1);
+
+        // Create a mock for the LoadBalancer class
+        $loadBalancerMock = $this->getMockBuilder(LoadBalancer::class)
+            ->setConstructorArgs([$hosts, LoadBalancer::ROUND_ROBIN])
+            ->onlyMethods(['handleRequestRoundRobin', 'handleRequestLoadBased'])
+            ->getMock();
+
+        // Set up the expectation for the handleRequestRoundRobin method to be called
+        $loadBalancerMock->expects($this->once())
+            ->method('handleRequestRoundRobin')
+            ->with($this->equalTo($request));
+
+        // Call the handleRequest method with the ROUND_ROBIN algorithm
+        $loadBalancerMock->handleRequest($request);
+    }
+
+    public function testItHandlesRequestLoadBased(): void
+    {
+        $hosts = [
+            new Host(0.2),
+            new Host(0.6),
+            new Host(0.1),
+        ];
+        $request = new Request(0.1);
+
+        // Create a mock for the LoadBalancer class
+        $loadBalancerMock = $this->getMockBuilder(LoadBalancer::class)
+            ->setConstructorArgs([$hosts, LoadBalancer::LOAD_BASED])
+            ->onlyMethods(['handleRequestRoundRobin', 'handleRequestLoadBased'])
+            ->getMock();
+
+        // Set up the expectation for the handleRequestRoundRobin method to be called
+        $loadBalancerMock->expects($this->once())
+            ->method('handleRequestLoadBased')
+            ->with($this->equalTo($request));
+
+        // Call the handleRequest method with the LOAD_BASED algorithm
+        $loadBalancerMock->handleRequest($request);
     }
 }

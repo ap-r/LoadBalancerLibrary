@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Exception\UnknownLoadBalancingAlgorithm;
+
 class LoadBalancer
 {
     public const ROUND_ROBIN = 1;
@@ -23,5 +25,20 @@ class LoadBalancer
 
     public function handleRequest(Request $request): void
     {
+        if ($this->algorithm === self::ROUND_ROBIN) {
+            $this->handleRequestRoundRobin($request);
+        } elseif ($this->algorithm === self::LOAD_BASED) {
+            $this->handleRequestLoadBased($request);
+        } else {
+            throw new UnknownLoadBalancingAlgorithm('Unknown algorithm variant');
+        }
+    }
+
+    public function handleRequestRoundRobin($request) {
+        // Pass the requests sequentially in rotation
+    }
+
+    public function handleRequestLoadBased($request) {
+        // Find the first host with load under 0.75 or the one with the lowest load
     }
 }
