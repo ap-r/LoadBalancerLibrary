@@ -30,3 +30,9 @@ test-phpunit:
 bash:
 	${COMPOSE} run php bash
 
+phpstan:
+	${COMPOSE} run php vendor/bin/phpstan analyse src tests
+
+phpfixer:
+	${COMPOSE} run php vendor/bin/php-cs-fixer fix --config=/app/.php-cs-fixer.php
+

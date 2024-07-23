@@ -17,6 +17,8 @@
     },
     "require-dev": {
         "dg/bypass-finals": "^1.5",
+        "friendsofphp/php-cs-fixer": "^3.59",
+        "phpstan/phpstan": "^1.11",
         "phpunit/phpunit": "^10.4",
         "symfony/browser-kit": "7.1.*",
         "symfony/css-selector": "7.1.*",
