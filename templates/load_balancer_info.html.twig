@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Load Balancer Information{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/load_balancer_info.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="header">
+            <h1>Load Balancer Information</h1>
+        </header>
+        <main class="main-content">
+            <section class="algorithm-info">
+                <h2>Algorithm</h2>
+                <p>{{ algorithm }}</p>
+            </section>
+            <section class="states-info">
+                <h2>Host States</h2>
+                <ul>
+                    {% for state in states %}
+                        <li>
+                            <h3>State no. {{ loop.index }}</h3>
+                            <ul>
+                                {% for host in state %}
+                                    <li>
+                                        Host no. {{ loop.index }} - Load: {{ host.load }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
+    </div>
+{% endblock %}

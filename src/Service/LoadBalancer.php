@@ -43,6 +43,25 @@ class LoadBalancer
         }
     }
 
+    public function getAlgorithm(): int
+    {
+        return $this->algorithm;
+    }
+
+    public function getAlgorithmName(): string
+    {
+        return match ($this->algorithm) {
+            self::ROUND_ROBIN => 'Round Robin',
+            self::LOAD_BASED => 'Load-based',
+            default => 'Unknown algorithm',
+        };
+    }
+
+    public function getHosts(): array
+    {
+        return $this->hosts;
+    }
+
     public function handleRequestRoundRobin(Request $request): void
     {
         // Pass the request to the current host

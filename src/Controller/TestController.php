@@ -28,38 +28,91 @@ class TestController extends AbstractController
 
         $request = new Request(BigDecimal::of(0.1));
 
-        $firstState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Capture the initial state
+        $states = [];
+        $algorithm = $loadBalancer->getAlgorithmName();
+        $states[] = $this->formatHostStates($loadBalancer->getHosts());
 
-        $secondState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Handle the first request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
 
-        $thirdState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Handle the second request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
 
-        return new Response("First state: \n". $firstState. "\nSecond state: \n". $secondState . "\nThird state: \n". $thirdState);
+        // Handle the third request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        // Handle the fourth request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        return $this->render('load_balancer_info.html.twig', [
+            'algorithm' => $algorithm,
+            'states' => $states,
+        ]);
     }
 
     #[Route('/load-balancer-load-based', name: 'load_based_example')]
     public function loadBasedAlgorithmExample(): Response
     {
-        $firstHost = new Host(BigDecimal::of(0.3));
+        $firstHost = new Host(BigDecimal::of(0.5));
         $secondHost = new Host(BigDecimal::of(0.7));
-        $thirdHost = new Host(BigDecimal::of(0.5));
+        $thirdHost = new Host(BigDecimal::of(0.8));
 
         $loadBalancer = new LoadBalancer([$firstHost, $secondHost, $thirdHost], LoadBalancer::LOAD_BASED);
 
         $request = new Request(BigDecimal::of(0.1));
 
-        $firstState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Capture the initial state
+        $states = [];
+        $algorithm = $loadBalancer->getAlgorithmName();
+        $states[] = $this->formatHostStates($loadBalancer->getHosts());
 
-        $secondState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Handle the first request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
 
-        $thirdState = $loadBalancer->__toString();
-        $loadBalancer->handleRequest($request);
+        // Handle the second request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
 
-        return new Response("First state: \n". $firstState. "\nSecond state: \n". $secondState . "\nThird state: \n". $thirdState);
+        // Handle the third request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        // Handle the fourth request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        // Handle the fifth request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        // Handle the sixth request and capture state
+        $states = $this->sendOneRequestAndCaptureState($loadBalancer, $request, $states);
+
+        return $this->render('load_balancer_info.html.twig', [
+            'algorithm' => $algorithm,
+            'states' => $states,
+        ]);
+    }
+
+    /**
+     * Helper method to format host states for display.
+     */
+    private function formatHostStates(array $hosts): array
+    {
+        return array_map(function (Host $host) {
+            return [
+                'load' => $host->getLoad(),
+            ];
+        }, $hosts);
+    }
+
+    /**
+     * @param LoadBalancer $loadBalancer
+     * @param Request $request
+     * @param array $states
+     * @return array
+     */
+    public function sendOneRequestAndCaptureState(LoadBalancer $loadBalancer, Request $request, array $states): array
+    {
+        $loadBalancer->handleRequest($request);
+        $states[] = $this->formatHostStates($loadBalancer->getHosts());
+        return $states;
     }
 }
