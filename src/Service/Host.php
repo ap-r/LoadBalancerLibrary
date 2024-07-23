@@ -34,6 +34,6 @@ class Host
 
     public function __toString(): string
     {
-        return "Host load: ". $this->load;
+        return 'Host load: '.$this->load;
     }
 }

@@ -17,6 +17,7 @@ class TestController extends AbstractController
     {
         return $this->render('index.html.twig');
     }
+
     #[Route('/load-balancer-round-robin', name: 'round_robin_example')]
     public function roundRobinAlgorithmExample(): Response
     {
@@ -93,6 +94,10 @@ class TestController extends AbstractController
 
     /**
      * Helper method to format host states for display.
+     *
+     * @param array<Host> $hosts an array of Host objects
+     *
+     * @return array<array{load: BigDecimal}> an array of associative arrays, each containing the 'load' key with a BigDecimal value
      */
     private function formatHostStates(array $hosts): array
     {
@@ -104,15 +109,19 @@ class TestController extends AbstractController
     }
 
     /**
-     * @param LoadBalancer $loadBalancer
-     * @param Request $request
-     * @param array $states
-     * @return array
+     * Handle a request and capture the state of the LoadBalancer.
+     *
+     * @param LoadBalancer                          $loadBalancer the LoadBalancer instance
+     * @param Request                               $request      the request to process
+     * @param array<array<array{load: BigDecimal}>> $states       an array of states, where each state is an array of associative arrays with 'load' information
+     *
+     * @return array<array<array{load: BigDecimal}>> the updated array of states, including the new state after handling the request
      */
     public function sendOneRequestAndCaptureState(LoadBalancer $loadBalancer, Request $request, array $states): array
     {
         $loadBalancer->handleRequest($request);
         $states[] = $this->formatHostStates($loadBalancer->getHosts());
+
         return $states;
     }
 }

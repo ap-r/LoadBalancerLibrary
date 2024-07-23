@@ -57,6 +57,9 @@ class LoadBalancer
         };
     }
 
+    /**
+     * @return Host[]
+     */
     public function getHosts(): array
     {
         return $this->hosts;
@@ -100,8 +103,9 @@ class LoadBalancer
 
     public function __toString(): string
     {
-        $algorithm = "Algorithm: " . ((self::ROUND_ROBIN === $this->algorithm) ? "Round Robin" : "Load based");
-        $hosts = "Hosts: " . implode(', ', array_map(fn(Host $host) => $host . "\n", $this->hosts));
-        return $algorithm. "\n". $hosts;
+        $algorithm = 'Algorithm: '.((self::ROUND_ROBIN === $this->algorithm) ? 'Round Robin' : 'Load based');
+        $hosts = 'Hosts: '.implode(', ', array_map(fn (Host $host) => $host."\n", $this->hosts));
+
+        return $algorithm."\n".$hosts;
     }
 }
