@@ -1,0 +1,18 @@
+version: "3"
+services:
+  php:
+    build:
+      context: ./
+    volumes:
+      - .:/app:cached
+    working_dir: /app
+    container_name: taxes_calculator_php
+
+  nginx:
+    image: nginx:1.15.8-alpine
+    ports:
+      - 127.0.0.1:${NGINX_PORT}:80
+    volumes:
+      - .:/app:cached
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro,cached
+    container_name: load_balancer_nginx
