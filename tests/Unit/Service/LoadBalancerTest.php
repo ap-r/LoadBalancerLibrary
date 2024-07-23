@@ -32,44 +32,44 @@ class LoadBalancerTest extends TestCase
             1 => [
                 BigDecimal::of('0.3'), // Load for Host 1
                 BigDecimal::of('0.6'), // Load for Host 2
-                BigDecimal::of('0.1')  // Load for Host 3
+                BigDecimal::of('0.1'),  // Load for Host 3
             ],
             // Request 2: Sent to Host 2
             2 => [
                 BigDecimal::of('0.3'), // Load for Host 1
                 BigDecimal::of('0.7'), // Load for Host 2
-                BigDecimal::of('0.1')  // Load for Host 3
+                BigDecimal::of('0.1'),  // Load for Host 3
             ],
             // Request 3: Sent to Host 3
             3 => [
                 BigDecimal::of('0.3'), // Load for Host 1
                 BigDecimal::of('0.7'), // Load for Host 2
-                BigDecimal::of('0.2')  // Load for Host 3
+                BigDecimal::of('0.2'),  // Load for Host 3
             ],
             // Request 4: Sent to Host 1
             4 => [
                 BigDecimal::of('0.4'), // Load for Host 1
                 BigDecimal::of('0.7'), // Load for Host 2
-                BigDecimal::of('0.2')  // Load for Host 3
+                BigDecimal::of('0.2'),  // Load for Host 3
             ],
             // Request 5: Sent to Host 2
             5 => [
                 BigDecimal::of('0.4'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.2')  // Load for Host 3
+                BigDecimal::of('0.2'),  // Load for Host 3
             ],
             // Request 6: Sent to Host 3
             6 => [
                 BigDecimal::of('0.4'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.3')  // Load for Host 3
+                BigDecimal::of('0.3'),  // Load for Host 3
             ],
             // Request 7: Sent to Host 1
             7 => [
                 BigDecimal::of('0.5'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.3')  // Load for Host 3
-            ]
+                BigDecimal::of('0.3'),  // Load for Host 3
+            ],
         ];
 
         foreach ($expectedLoads as $requestCount => $expectedLoad) {
@@ -100,43 +100,43 @@ class LoadBalancerTest extends TestCase
             1 => [
                 BigDecimal::of('0.6'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.71') // Load for Host 3
+                BigDecimal::of('0.71'), // Load for Host 3
             ],
             // After 2nd request: Sent to Host 1 again (load < 0.75)
             2 => [
                 BigDecimal::of('0.7'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.71') // Load for Host 3
+                BigDecimal::of('0.71'), // Load for Host 3
             ],
             // After 3rd request: Sent to Host 1 again (load < 0.75)
             3 => [
                 BigDecimal::of('0.8'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.71') // Load for Host 3
+                BigDecimal::of('0.71'), // Load for Host 3
             ],
             // After 4th request: Sent to Host 3 (load < 0.75)
             4 => [
                 BigDecimal::of('0.8'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.81') // Load for Host 3
+                BigDecimal::of('0.81'), // Load for Host 3
             ],
             // After 5th request: Sent to Host 1 with the lowest load (all loads >= 0.75)
             5 => [
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.8'), // Load for Host 2
-                BigDecimal::of('0.81') // Load for Host 3
+                BigDecimal::of('0.81'), // Load for Host 3
             ],
             // After 6th request: Sent to Host 2 with the lowest load (all loads >= 0.75)
             6 => [
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.9'), // Load for Host 2
-                BigDecimal::of('0.81') // Load for Host 3
+                BigDecimal::of('0.81'), // Load for Host 3
             ],
             // After 7th request: Sent to Host 2 with the lowest load (all loads >= 0.75)
             7 => [
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.9'), // Load for Host 2
-                BigDecimal::of('0.91') // Load for Host 3
+                BigDecimal::of('0.91'), // Load for Host 3
             ],
         ];
 
@@ -152,7 +152,6 @@ class LoadBalancerTest extends TestCase
             }
         }
     }
-
 
     /**
      * @throws NumberFormatException
@@ -176,28 +175,28 @@ class LoadBalancerTest extends TestCase
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.95'), // Load for Host 2
                 BigDecimal::of('0.85'), // Load for Host 3
-                BigDecimal::of('0.81')  // Load for Host 4 (lowest load)
+                BigDecimal::of('0.81'),  // Load for Host 4 (lowest load)
             ],
             // After 2nd request: Sent to the fourth host with the lowest load (all loads >= 0.75)
             2 => [
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.95'), // Load for Host 2
                 BigDecimal::of('0.85'), // Load for Host 3
-                BigDecimal::of('0.91')  // Load for Host 4 (updated after 1st request)
+                BigDecimal::of('0.91'),  // Load for Host 4 (updated after 1st request)
             ],
             // After 3rd request: Sent to the third host with the lowest load (all loads >= 0.75)
             3 => [
                 BigDecimal::of('0.9'), // Load for Host 1
                 BigDecimal::of('0.95'), // Load for Host 2
                 BigDecimal::of('0.95'), // Load for Host 3 (updated after 2nd request)
-                BigDecimal::of('0.91')  // Load for Host 4
+                BigDecimal::of('0.91'),  // Load for Host 4
             ],
             // After 4th request: Sent to the third host with the lowest load (all loads >= 0.75)
             4 => [
                 BigDecimal::of('1.0'), // Load for Host 1
                 BigDecimal::of('0.95'), // Load for Host 2
                 BigDecimal::of('0.95'), // Load for Host 3 (updated after 3rd request)
-                BigDecimal::of('0.91')  // Load for Host 4
+                BigDecimal::of('0.91'),  // Load for Host 4
             ],
         ];
 
@@ -212,8 +211,6 @@ class LoadBalancerTest extends TestCase
                 );
             }
         }
-
-
     }
 
     public function testItHandlesRequestRoundRobin(): void
