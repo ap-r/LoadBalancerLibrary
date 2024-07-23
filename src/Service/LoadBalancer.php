@@ -14,6 +14,8 @@ class LoadBalancer
     private array $hosts;
     private int $algorithm;
 
+    private int $currentHostIndex;
+
     /**
      * @param Host[] $hosts
      */
@@ -25,20 +27,30 @@ class LoadBalancer
 
     public function handleRequest(Request $request): void
     {
-        if ($this->algorithm === self::ROUND_ROBIN) {
+        if (self::ROUND_ROBIN === $this->algorithm) {
             $this->handleRequestRoundRobin($request);
-        } elseif ($this->algorithm === self::LOAD_BASED) {
+        } elseif (self::LOAD_BASED === $this->algorithm) {
             $this->handleRequestLoadBased($request);
         } else {
             throw new UnknownLoadBalancingAlgorithm('Unknown algorithm variant');
         }
     }
 
-    public function handleRequestRoundRobin($request) {
-        // Pass the requests sequentially in rotation
+    public function handleRequestRoundRobin(Request $request): void
+    {
+        // Pass the request to the current host
+        $this->hosts[$this->currentHostIndex]->handleRequest($request);
+
+        ++$this->currentHostIndex;
+
+        // Reset the currentHostIndex after a complete rotation
+        if ($this->currentHostIndex >= count($this->hosts)) {
+            $this->currentHostIndex = 0;
+        }
     }
 
-    public function handleRequestLoadBased($request) {
+    public function handleRequestLoadBased(Request $request): void
+    {
         // Find the first host with load under 0.75 or the one with the lowest load
     }
 }
