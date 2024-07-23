@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Load Balancer Examples{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/index.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="header">
+            <h1>Load Balancer Examples</h1>
+        </header>
+        <main class="main-content">
+            <div class="button-container">
+                <a href="{{ path('round_robin_example') }}" class="btn btn-primary">Round Robin Example</a>
+                <a href="{{ path('load_based_example') }}" class="btn btn-primary">Load Based Example</a>
+            </div>
+        </main>
+    </div>
+{% endblock %}

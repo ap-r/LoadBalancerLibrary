@@ -31,4 +31,9 @@ class Host
 
         $this->load = $newLoad;
     }
+
+    public function __toString(): string
+    {
+        return "Host load: ". $this->load;
+    }
 }
