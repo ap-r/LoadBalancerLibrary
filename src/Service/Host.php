@@ -18,5 +18,7 @@ class Host
 
     public function handleRequest(Request $request): void
     {
+        // Simulate handling the request by increasing the load
+        $this->load += $request->getLoadIncrease();
     }
 }
