@@ -2,16 +2,18 @@
 
 namespace App\Service;
 
+use Brick\Math\BigDecimal;
+
 class Request
 {
-    private float $loadIncrease;
+    private BigDecimal $loadIncrease;
 
-    public function __construct(float $loadIncrease = 0.1)
+    public function __construct(BigDecimal $loadIncrease)
     {
         $this->loadIncrease = $loadIncrease;
     }
 
-    public function getLoadIncrease(): float
+    public function getLoadIncrease(): BigDecimal
     {
         return $this->loadIncrease;
     }

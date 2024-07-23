@@ -2,16 +2,18 @@
 
 namespace App\Service;
 
+use Brick\Math\BigDecimal;
+
 class Host
 {
-    private float $load;
+    private BigDecimal $load;
 
-    public function __construct(float $load = 0.0)
+    public function __construct(BigDecimal $load)
     {
         $this->load = $load;
     }
 
-    public function getLoad(): float
+    public function getLoad(): BigDecimal
     {
         return $this->load;
     }
@@ -19,6 +21,6 @@ class Host
     public function handleRequest(Request $request): void
     {
         // Simulate handling the request by increasing the load
-        $this->load += $request->getLoadIncrease();
+        $this->load = $this->load->plus(BigDecimal::of($request->getLoadIncrease()));
     }
 }

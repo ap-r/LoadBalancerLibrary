@@ -2,9 +2,11 @@
 
 namespace App\Service;
 
+use Brick\Math\BigDecimal;
+
 interface HostInterface
 {
-    public function getLoad(): float;
+    public function getLoad(): BigDecimal;
 
     public function handleRequest(Request $request): void;
 }
