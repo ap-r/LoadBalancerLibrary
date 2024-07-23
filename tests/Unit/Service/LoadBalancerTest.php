@@ -11,7 +11,7 @@ class LoadBalancerTest extends TestCase
         $hosts = [
             new Host(0.2),
             new Host(0.6),
-            new Host(0.1)
+            new Host(0.1),
         ];
         $request = new Request(0.1);
         $loadBalancer = new LoadBalancer($hosts, LoadBalancer::ROUND_ROBIN);
@@ -40,7 +40,7 @@ class LoadBalancerTest extends TestCase
         $hosts = [
             new Host(0.5),
             new Host(0.8),
-            new Host(0.71)
+            new Host(0.71),
         ];
         $request = new Request(0.1);
         $loadBalancer = new LoadBalancer($hosts, LoadBalancer::LOAD_BASED);
@@ -88,7 +88,7 @@ class LoadBalancerTest extends TestCase
             new Host(0.9),
             new Host(0.95),
             new Host(0.85),
-            new Host(0.71)
+            new Host(0.71),
         ];
         $request = new Request(0.1);
         $loadBalancer = new LoadBalancer($hosts, LoadBalancer::LOAD_BASED);
@@ -98,7 +98,6 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(0.9, $hosts[0]->getLoad());
         $this->assertEquals(0.85, $hosts[1]->getLoad());
         $this->assertEquals(0.81, $hosts[2]->getLoad());
-
 
         // First request should go to the third host with the lowest load since all are >= 0.75
         $loadBalancer->handleRequest($request);
