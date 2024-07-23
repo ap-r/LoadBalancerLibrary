@@ -103,7 +103,7 @@ class LoadBalancer
 
     public function __toString(): string
     {
-        $algorithm = 'Algorithm: '.((self::ROUND_ROBIN === $this->algorithm) ? 'Round Robin' : 'Load based');
+        $algorithm = 'Algorithm: '.$this->getAlgorithmName()."\n";
         $hosts = 'Hosts: '.implode(', ', array_map(fn (Host $host) => $host."\n", $this->hosts));
 
         return $algorithm."\n".$hosts;
