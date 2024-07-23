@@ -50,3 +50,5 @@ $loadBalancer->handleRequest($request);
 $loadBalancer->handleRequest($request);
 
 ```
+
+Note: The example pages included are intended solely for testing purposes. They are not meant to mislead about the correct usage of the code but rather to facilitate testing and verification of the load balancing functionalities.
