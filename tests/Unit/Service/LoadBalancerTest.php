@@ -6,10 +6,17 @@ use App\Service\Host;
 use App\Service\LoadBalancer;
 use App\Service\Request;
 use Brick\Math\BigDecimal;
+use Brick\Math\Exception\DivisionByZeroException;
+use Brick\Math\Exception\NumberFormatException;
 use PHPUnit\Framework\TestCase;
 
 class LoadBalancerTest extends TestCase
 {
+    /**
+     * @throws \Throwable
+     * @throws NumberFormatException
+     * @throws DivisionByZeroException
+     */
     public function testItPassesRequestAccordingToRoundRobin(): void
     {
         $hosts = [
@@ -39,6 +46,11 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(BigDecimal::of(0.2), $hosts[2]->getLoad());
     }
 
+    /**
+     * @throws NumberFormatException
+     * @throws DivisionByZeroException
+     * @throws \Throwable
+     */
     public function testItPassesRequestToTheFirstHostAndThenToTheHostWithTheLowestLoad(): void
     {
         $hosts = [
@@ -80,6 +92,12 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(BigDecimal::of('0.81'), $hosts[2]->getLoad());
     }
 
+
+    /**
+     * @throws NumberFormatException
+     * @throws DivisionByZeroException
+     * @throws \Throwable
+     */
     public function testItPassesRequestToTheHostWithTheLowestLoad(): void
     {
         $hosts = [
@@ -128,7 +146,6 @@ class LoadBalancerTest extends TestCase
             new Host(BigDecimal::of('0.1')),
         ];
         $request = new Request(BigDecimal::of('0.1'));
-
 
         // Create a mock for the LoadBalancer class
         $loadBalancerMock = $this->getMockBuilder(LoadBalancer::class)

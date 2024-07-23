@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Exception\UnknownLoadBalancingAlgorithm;
 use Brick\Math\BigDecimal;
 use Brick\Math\Exception\NumberFormatException;
-use Throwable;
 
 class LoadBalancer
 {
@@ -23,7 +22,8 @@ class LoadBalancer
 
     /**
      * @param Host[] $hosts
-     * @throws NumberFormatException|Throwable
+     *
+     * @throws NumberFormatException|\Throwable
      */
     public function __construct(array $hosts, int $algorithm)
     {
@@ -72,7 +72,7 @@ class LoadBalancer
             }
         }
 
-        if ($selectedHost === null) {
+        if (null === $selectedHost) {
             $selectedHost = $lowestLoadHost;
         }
 
