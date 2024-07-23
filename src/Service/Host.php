@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Exception\LoadExceededException;
 use Brick\Math\BigDecimal;
 
 class Host
@@ -25,7 +26,7 @@ class Host
 
         // Ensure that the load does not exceed 1
         if ($newLoad->isGreaterThan(BigDecimal::of('1.0'))) {
-            $newLoad = BigDecimal::of('1.0');
+            throw new LoadExceededException();
         }
 
         $this->load = $newLoad;
