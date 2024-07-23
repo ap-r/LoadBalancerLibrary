@@ -21,6 +21,13 @@ class Host
     public function handleRequest(Request $request): void
     {
         // Simulate handling the request by increasing the load
-        $this->load = $this->load->plus(BigDecimal::of($request->getLoadIncrease()));
+        $newLoad = $this->load->plus(BigDecimal::of($request->getLoadIncrease()));
+
+        // Ensure that the load does not exceed 1
+        if ($newLoad->isGreaterThan(BigDecimal::of('1.0'))) {
+            $newLoad = BigDecimal::of('1.0');
+        }
+
+        $this->load = $newLoad;
     }
 }
