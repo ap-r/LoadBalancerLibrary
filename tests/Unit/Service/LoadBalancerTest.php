@@ -2,11 +2,14 @@
 
 namespace App\Tests\Unit\Service;
 
+use App\Service\Host;
+use App\Service\LoadBalancer;
+use App\Service\Request;
 use PHPUnit\Framework\TestCase;
 
 class LoadBalancerTest extends TestCase
 {
-    public function testItPassesRequestAccordingToRoundRobin()
+    public function testItPassesRequestAccordingToRoundRobin(): void
     {
         $hosts = [
             new Host(0.2),
@@ -35,7 +38,7 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(0.2, $hosts[2]->getLoad());
     }
 
-    public function testItPassesRequestAtFirstToTheFirstHostAndThenToTheHostWithTheLowestLoad()
+    public function testItPassesRequestAtFirstToTheFirstHostAndThenToTheHostWithTheLowestLoad(): void
     {
         $hosts = [
             new Host(0.5),
@@ -82,7 +85,7 @@ class LoadBalancerTest extends TestCase
         $this->assertEquals(0.81, $hosts[2]->getLoad());
     }
 
-    public function testItPassesRequestToTheHostWithTheLowestLoad()
+    public function testItPassesRequestToTheHostWithTheLowestLoad(): void
     {
         $hosts = [
             new Host(0.9),
